@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunu Idées</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="main-layout">
+      <h1>Sunu Idées</h1>
+      <div class="sunu-app-container">
+        <div class="ideas-wall" id="ideas-wall">
+          <button class="circle-trigger-btn" id="open-modal-btn">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Soumettre son idée</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE DU FORMULAIRE -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="sunu-app">
+      <button class="close-modal" id="close-modal-btn">&times;</button>
+      <h2>Partagez votre idée</h2>
+      <div class="input-area">
+        <input type="text" id="task-title" placeholder="Titre de l'idée...">
+      </div>
+      <div class="categories-container">
+        <button class="category-btn" data-cat="pedagogie">Pédagogie</button>
+        <button class="category-btn" data-cat="evenement">Événement</button>
+        <button class="category-btn" data-cat="campus">Vie de Campus</button>
+        <button class="category-btn" data-cat="technique">Technique</button>
+      </div>
+      <div class="input-area">
+        <textarea id="task-desc" rows="4" placeholder="Décrivez votre idée..."></textarea>
+      </div>
+      <button id="submit-btn">Ajouter au mur</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

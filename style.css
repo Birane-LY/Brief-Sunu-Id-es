@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Serif+Display&family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: url('images/background.jpg') no-repeat center/cover fixed;
+  background-color: #333; 
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1300px;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.main-layout h1 {
+  color: #fff;
+  font-family: "DM Serif Display", serif;
+  font-size: 3.5rem;
+  text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.sunu-app-container {
+  width: 100%;
+}
+
+/* --- LE MUR EN GRILLE  --- */
+.ideas-wall {
+  display: grid;
+  /* Grille de 4 colonnes sur les grands écrans */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 35px;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
+}
+
+/* --- BOUTON CENTRAL  --- */
+.circle-trigger-btn {
+  grid-column: span 1; 
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 194, 209, 0.25);
+  backdrop-filter: blur(15px);
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255,255,255,0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-align: center;
+  padding: 15px;
+  z-index: 10;
+}
+
+/* Sur les grands écrans, on force le bouton à rester au milieu de la grille */
+@media (min-width: 992px) {
+  .ideas-wall {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .circle-trigger-btn {
+    grid-column: 2 / 4; /* Prend le milieu sur une ligne */
+    grid-row: 2;         /* Se place sur la deuxième ligne au milieu */
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.circle-trigger-btn i {
+  font-size: 2.5rem;
+  color: #f1c40f;
+  animation: pulse 2s infinite;
+}
+
+.circle-trigger-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255, 194, 209, 0.4);
+  box-shadow: 0 15px 40px rgba(255, 194, 209, 0.4);
+}
+
+/* --- LES POST-ITS  --- */
+.post-it {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  min-height: 260px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+}
+
+/* Alterne l'inclinaison une carte sur deux pour faire effet "collé au hasard" */
+.post-it:nth-child(even) {
+  transform: rotate(2deg) translateY(5px);
+}
+.post-it:nth-child(3n) {
+  transform: rotate(-2.5deg) translateY(-3px);
+}
+
+/* EFFET OMBRE PORTÉE PAPIER CORNÉ (Bas droit) */
+.post-it::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  bottom: 4px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+  transform: skew(12deg) rotate(4deg);
+  z-index: -1;
+}
+
+.post-it:hover {
+  transform: scale(1.04) rotate(0deg) translateY(-5px) !important;
+  box-shadow: 10px 15px 25px rgba(0, 0, 0, 0.35);
+  z-index: 5;
+}
+
+/* COULEURS DES POST-ITS ) */
+.cat-pedagogie { background: #fffaa0; color: #444; } /* Jaune classique */
+.cat-evenement { background: #ffb3ba; color: #444; } /* Rose */
+.cat-campus { background: #bae1ff; color: #444; }    /* Bleu */
+.cat-technique { background: #baffc9; color: #444; } /* Vert */
+
+/* En-tête du post-it */
+.post-it-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.post-it .checkbox {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: #333;
+}
+
+/* Corps du texte */
+.post-it-body {
+  flex: 1;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: 'Caveat', cursive; 
+}
+
+.task-title-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #111;
+}
+
+.task-desc-text {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: #333;
+  display: -webkit-box;
+  --webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Bas du post-it */
+.post-it-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.post-it-footer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.4);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.post-it-footer .edit-btn:hover { color: #2980b9; transform: scale(1.1); }
+.post-it-footer .delete-btn:hover { color: #c0392b; transform: scale(1.1); }
+
+/* État accompli (barré et flouté) */
+.post-it.completed {
+  opacity: 0.6;
+  filter: grayscale(30%);
+}
+.post-it.completed .task-title-text,
+.post-it.completed .task-desc-text {
+  text-decoration: line-through;
+  color: #777;
+}
+
+/* --- MODALE ET FORMULAIRE --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sunu-app {
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(15px);
+  background: rgba(255, 194, 209, 0.15);
+  position: relative;
+  transform: translateY(-30px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .sunu-app {
+  transform: translateY(0);
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Inputs du formulaire */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+.input-area input, .input-area textarea {
+  width: 100%;
+  padding: 12px 17px;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  background: rgba(255, 194, 209, 0.25);
+  color: #fff;
+  font-family: inherit;
+}
+.input-area input::placeholder, .input-area textarea::placeholder { color: #ddd; }
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+.category-btn {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 194, 209, 0.1);
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.category-btn.active, .category-btn:hover {
+  background: #fff;
+  color: #333;
+  font-weight: 600;
+}
+
+#submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  background: #fff;
+  color: #333;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#submit-btn:hover { background: #ffb3ba; }
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

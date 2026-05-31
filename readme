@@ -1,0 +1,56 @@
+# Sunu Idees
+
+Sunu Idees est une boite a idees numerique, anonyme et collaborative developpee sous la forme d'un tableau de bord dynamique. Concu pour stimuler l'intelligence collective au sein d'une entreprise ou d'une communaute educative comme Simplon, cet outil offre une alternative transparente et instantanee aux formulaires de collecte classiques en affichant publiquement et en temps reel l'ensemble des contributions.
+
+Le systeme repose sur une approche entierement libre et inclusive : aucune authentification (connexion ou inscription) n'est requise. Basee sur la confiance et la moderation collaborative, l'application permet a chaque membre de la communaute de soumettre des projets, d'enrichir les propositions existantes ou de nettoyer le tableau.
+
+---
+
+## Architecture et Architecture Technique
+
+Pour garantir une experience utilisateur fluide et moderne, l'application est concue selon le modele Single Page Application (SPA). Toutes les interactions de l'utilisateur s'effectuent sans aucun rechargement de la page grace a une gestion asynchrone et une manipulation directe du DOM en JavaScript.
+
+La persistance des donnees est assuree via l'API LocalStorage du navigateur. Ce choix technique permet de maintenir l'integrite du tableau blanc et de conserver les idees de la communaute meme apres la fermeture de l'onglet ou le redemarrage du navigateur, contournant ainsi l'absence de base de donnees serveur.
+
+---
+
+## Fonctionnalites Implementees
+
+L'application integre un cycle de vie complet des donnees (CRUD) reparti de la maniere suivante :
+
+### Creation (Soumission anonyme)
+Un formulaire accessible via une interface modale permet de poster une idee. L'utilisateur doit renseigner un titre, selectionner une categorie predefinie et fournir une description detaillee.
+
+### Lecture (Le Mur d'idees)
+Les idees sont affichees dynamiquement sur un tableau blanc sous forme de cartes graphiques rappelant des notes de type Post-it. Un code couleur specifique est applique a chaque carte selon sa categorie afin de faciliter la lecture visuelle. Les categories disponibles sont :
+- Pedagogie
+- Evenement
+- Vie de campus
+- Technique (Amelioration technique)
+
+### Modification (Moderation collaborative)
+Chaque carte dispose d'un bouton d'edition. L'activation de ce bouton rebascule le contenu de la note dans le formulaire de saisie, permettant a n'importe quel collaborateur de corriger une formulation, de preciser une pensee ou de mettre a jour le statut de l'idee.
+
+### Suppression (Nettoyage du tableau)
+Un bouton de suppression est integre a chaque note. Il permet de retirer definitivement une idee du mur et du stockage LocalStorage des lors que celle-ci a ete traitee par les equipes ou qu'elle est jugee hors-sujet par la communaute.
+
+### Suivi des taches
+Un systeme de case a cocher permet de marquer visuellement une idee comme accomplie. Les idees terminees subissent une reduction d'opacite et un texte barre pour indiquer leur traitement sans necessiter leur suppression immediate.
+
+---
+
+## Structure du Projet
+
+Le code source est structure de facon monolithique et legere pour un deploiement rapide en environnement Front-End :
+
+- index.html : Contient la structure sementique de la page principale, du mur de cartes et du formulaire de saisie modal.
+- style.css : Regroupe l'identite visuelle responsive, l'affichage en grille adaptative, les rotations realistes des cartes et les effets de flou d'arriere-plan.
+- script.js : Centralise la logique metier, les ecouteurs d'evenements, la manipulation dynamique des elements HTML et la synchronisation avec le LocalStorage.
+
+---
+
+## Installation et Lancement
+
+1. Cloner le depot du projet ou telecharger l'ensemble des fichiers sources.
+2. S'assurer de la presence d'une image d'arriere-plan dans le repertoire specifie par le fichier CSS (images/background.jpg) pour preserver l'affichage initial.
+3. Executer le projet en ouvrant directement le fichier index.html dans un navigateur web moderne. Aucun serveur web ou dependance tierce n'est requis pour le developpement ou l'utilisation.
