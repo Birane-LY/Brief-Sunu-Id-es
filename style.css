@@ -149,6 +149,8 @@ body {
 .cat-evenement { background: #ffb3ba; color: #444; } /* Rose */
 .cat-campus { background: #bae1ff; color: #444; }    /* Bleu */
 .cat-technique { background: #baffc9; color: #444; } /* Vert */
+.cat-autre { background: #ac4646; color: #444; } /* Orange */
+
 
 /* En-tête du post-it */
 .post-it-header {

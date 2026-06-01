@@ -146,32 +146,100 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // --- SOUMISSION DU FORMULAIRE ---
-  submitBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+  // submitBtn.addEventListener('click', (e) => {
+  //   e.preventDefault();
 
-    const title = titleInput.value.trim();
-    const desc = descInput.value.trim();
+  //   const title = titleInput.value.trim();
+  //   const desc = descInput.value.trim();
 
-    if (!title || !desc) {
-      alert("Veuillez remplir le titre et la description !");
-      return;
-    }
+  //   if (!title || !desc) {
+  //     alert("Veuillez remplir le titre et la description !");
+  //     return;
+  //   }
 
-    // Création visuelle du post-it
-    createPostIt(title, desc, selectedCategory);
+  //   // Création visuelle du post-it
+  //   createPostIt(title, desc, selectedCategory);
     
-    saveToLocalStorage();
+  //   saveToLocalStorage();
 
-    // Réinitialisation du formulaire
-    titleInput.value = '';
-    descInput.value = '';
-    selectedCategory = 'pedagogie';
-    catButtons.forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-cat="pedagogie"]').classList.add('active');
+  //   // Réinitialisation du formulaire
+  //   titleInput.value = '';
+  //   descInput.value = '';
+  //   selectedCategory = 'pedagogie';
+  //   catButtons.forEach(b => b.classList.remove('active'));
+  //   document.querySelector('[data-cat="pedagogie"]').classList.add('active');
 
-    modalOverlay.classList.remove('active');
-  });
+  //   modalOverlay.classList.remove('active');
+  // });
+
+
+submitBtn.addEventListener('click', async (e) => {
+  e.preventDefault(); 
+
+  const title = titleInput.value.trim(); 
+  const desc = descInput.value.trim();   
+
+  if (!title || !desc) {
+    alert("Veuillez remplir le titre et la description !");
+    return;
+  }
+
+  // 1. Changement d'état visuel immédiat pour faire patienter l'utilisateur
+  submitBtn.textContent = "Classification IA en cours...";
+  submitBtn.disabled = true;
+
+  let finalCategory = "autre"; 
+
+  // 2. Appel du modèle local Ollama
+  try {
+    const response = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: "sunu-classifier", 
+        prompt: `title: "${title}"\ndescription: "${desc}"`,
+        format: "json",         
+        stream: false             
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // On extrait la chaîne JSON retournée par le LLM et on la parse
+      const aiResult = JSON.parse(data.response);
+      
+      // On vérifie que la catégorie retournée fait bien partie des choix valides
+      const validCategories = ['pedagogie', 'evenement', 'campus', 'technique'];
+      if (validCategories.includes(aiResult.category)) {
+        finalCategory = aiResult.category;
+      }
+    }
+  } catch (error) {
+    console.error("Ollama est inaccessible. Attribution de la catégorie par défaut : autre.", error);
+  }
+
+  // 3. Création graphique du post-it avec la catégorie décidée par l'IA 
+  createPostIt(title, desc, finalCategory);
+
+  // 4. Sauvegarde dans le LocalStorage et fermeture de l'interface 
+  saveToLocalStorage();
+  
+  // 5. Réinitialisation du formulaire 
+  titleInput.value = '';
+  descInput.value = '';
+  catButtons.forEach(b => b.classList.remove('active'));
+  // On remet visuellement le bouton "Pédagogie" actif par défaut pour l'interface 
+  document.querySelector('[data-cat="pedagogie"]').classList.add('active'); 
+  
+  // Rétablissement du bouton de soumission
+  submitBtn.textContent = "Ajouter au mur";
+  submitBtn.disabled = false;
+  
+  // Fermeture de la modale 
+  modalOverlay.classList.remove('active');
+});
 
   // INITIALISATION : Charger les données existantes au démarrage de l'application
   loadFromLocalStorage();
 });
+
