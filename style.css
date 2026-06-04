@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Serif+Display&family=Poppins:wght@400;500;600&display=swap');
 
+:root {
+ 
+  --erreur-couleur: #ff7675;
+  --succes-couleur: #2ecc71;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -74,17 +80,23 @@ body {
   padding: 15px;
   z-index: 10;
 }
-
-/* Sur les grands écrans, on force le bouton à rester au milieu de la grille */
 @media (min-width: 992px) {
   .ideas-wall {
     grid-template-columns: repeat(4, 1fr);
   }
   .circle-trigger-btn {
-    grid-column: 2 / 4; /* Prend le milieu sur une ligne */
-    grid-row: 2;         /* Se place sur la deuxième ligne au milieu */
+    grid-column: 2 / 4;
+    grid-row: 2;        
+    justify-self: center;
     width: 180px;
     height: 180px;
+  }
+}
+
+/* Sur mobile, centré seul */
+@media (max-width: 991px) {
+  .circle-trigger-btn {
+    justify-self: center;
   }
 }
 
@@ -149,7 +161,7 @@ body {
 .cat-evenement { background: #ffb3ba; color: #444; } /* Rose */
 .cat-campus { background: #bae1ff; color: #444; }    /* Bleu */
 .cat-technique { background: #baffc9; color: #444; } /* Vert */
-.cat-autre { background: #ac4646; color: #444; } /* Orange */
+.cat-autre { background: #f1a94b; color: #444; } /* Orange */
 
 
 /* En-tête du post-it */
@@ -351,4 +363,22 @@ body {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
+}
+
+/* ÉTATS VALIDATION JS */
+.input-area.error input,
+.input-area.error.error textarea {
+  border-color: var(--erreur-couleur) !important;
+}
+
+.input-area.success text,
+.input-area.success textarea {
+  border-color: var(--succes-couleur) !important;
+}
+
+.error-message {
+  color: var(--erreur-couleur);
+  font-size: 0.8rem;
+  margin-top: 6px;
+  font-weight: 500;
 }
