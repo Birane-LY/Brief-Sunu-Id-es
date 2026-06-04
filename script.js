@@ -1,4 +1,4 @@
-import { OPENROUTER_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY } from '/env.js';
+import { OPENROUTER_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY } from '/.env';
 
 document.addEventListener('DOMContentLoaded', () => {
 
